@@ -24,17 +24,23 @@ public class Gen1 {
         return new FinalBuilder1();
     }
 
+    //
 
-    //public interface ValueSetter1<T extends Gen1, RetBuilder extends ValueSetter1<? extends T,? extends RetBuilder> > extends Builder<T> {
+    /**
+     * need as basic abstraction only. used
+     * @param <T>
+     * @param <RetBuilder>
+     */
     public interface ValueSetter1<T extends Gen1, RetBuilder extends ValueSetter1<? extends T,?> > extends Builder<T> {
         public RetBuilder val1(String val);
     }
 
-    /*public interface ValueSetter1Ex<T extends Gen1> extends ValueSetter1<T, ValueSetter1Ex<T>> {
 
-    }*/
-
-
+    /**
+     * implicit implementation of abstraction. without java implements!
+     * @param <T>
+     * @param <RetBuilder>
+     */
     public static class ValueSetter1Impl<T extends Gen1, RetBuilder extends ValueSetter1Impl<T,RetBuilder> > extends BuilderImpl<T, RetBuilder> {
 
         protected ValueSetter1Impl(T created) {
@@ -47,10 +53,11 @@ public class Gen1 {
         }
     }
 
+    /**
+     * real implementation of builder. all methods of ValueSetter1 are implemented indirectly
+     */
     public static class FinalBuilder1 extends ValueSetter1Impl<Gen1, FinalBuilder1> implements ValueSetter1<Gen1, FinalBuilder1>{
-        //implements ValueSetter1Ex<Gen1> {
-            //implements ValueSetter1<Gen1, FinalBuilder1> {
-    // implements ValueSetter1<Gen1, FinalBuilder1> {
+
         private FinalBuilder1() {
             super(new Gen1());
             injectReturningBuilder(this);
