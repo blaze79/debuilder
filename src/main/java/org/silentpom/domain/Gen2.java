@@ -14,17 +14,14 @@ public class Gen2 extends Gen1 {
         this.val2 = val2;
     }
 
-    public static ValueSetter2<? extends Gen2, ?>  builder() {
+    public static InnerBuilder2<? extends Gen2, ?> builder() {
         return new FinalBuilder2();
     }
 
-    public interface ValueSetter2<T extends Gen2, RetBuilder extends ValueSetter2<? extends T,?>> extends ValueSetter1<T, RetBuilder> {
-        public RetBuilder val2(String val);
-    }
 
-    public static class ValueSetter2Impl<T extends Gen2, RetBuilder extends ValueSetter2Impl<T,RetBuilder>> extends ValueSetter1Impl<T, RetBuilder> {
+    public static class InnerBuilder2<T extends Gen2, RetBuilder extends InnerBuilder2<? extends T,?>> extends InnerBuilder1<T, RetBuilder> {
 
-        protected ValueSetter2Impl(T created) {
+        protected InnerBuilder2(T created) {
             super(created);
         }
 
@@ -34,11 +31,11 @@ public class Gen2 extends Gen1 {
         }
     }
 
-    public static class FinalBuilder2 extends ValueSetter2Impl<Gen2, FinalBuilder2> implements ValueSetter2<Gen2, FinalBuilder2>{
+    private static class FinalBuilder2 extends InnerBuilder2<Gen2, FinalBuilder2> {
 
         private FinalBuilder2() {
             super(new Gen2());
-            injectReturningBuilder(this);
+            injectReturnBuilder(this);
         }
     }
 }

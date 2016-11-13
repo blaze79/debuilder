@@ -1,16 +1,12 @@
 package org.silentpom.domain;
 
-import org.silentpom.builder.Builder;
 import org.silentpom.builder.BuilderImpl;
-
-import java.util.List;
 
 /**
  * Created by Vlad on 29.10.2016.
  */
 public class Gen1 {
     String val1;
-    List<? extends Gen1> gens;
 
     public String getVal1() {
         return val1;
@@ -20,30 +16,20 @@ public class Gen1 {
         this.val1 = val1;
     }
 
-    public static ValueSetter1<? extends Gen1, ?>  builder() {
+    public static InnerBuilder1<? extends Gen1, ?> builder() {
         return new FinalBuilder1();
     }
 
-    //
 
     /**
-     * need as basic abstraction only. used
+     * implementation of builder abstraction.
+     *
      * @param <T>
      * @param <RetBuilder>
      */
-    public interface ValueSetter1<T extends Gen1, RetBuilder extends ValueSetter1<? extends T,?> > extends Builder<T> {
-        public RetBuilder val1(String val);
-    }
+    public static class InnerBuilder1<T extends Gen1, RetBuilder extends InnerBuilder1<? extends T, ?>> extends BuilderImpl<T, RetBuilder> {
 
-
-    /**
-     * implicit implementation of abstraction. without java implements!
-     * @param <T>
-     * @param <RetBuilder>
-     */
-    public static class ValueSetter1Impl<T extends Gen1, RetBuilder extends ValueSetter1Impl<T,RetBuilder> > extends BuilderImpl<T, RetBuilder> {
-
-        protected ValueSetter1Impl(T created) {
+        protected InnerBuilder1(T created) {
             super(created);
         }
 
@@ -54,13 +40,13 @@ public class Gen1 {
     }
 
     /**
-     * real implementation of builder. all methods of ValueSetter1 are implemented indirectly
+     * real builder Gen1.
      */
-    public static class FinalBuilder1 extends ValueSetter1Impl<Gen1, FinalBuilder1> implements ValueSetter1<Gen1, FinalBuilder1>{
+    private static class FinalBuilder1 extends InnerBuilder1<Gen1, FinalBuilder1> {
 
         private FinalBuilder1() {
             super(new Gen1());
-            injectReturningBuilder(this);
+            injectReturnBuilder(this);
         }
     }
 

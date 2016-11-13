@@ -2,10 +2,12 @@ package org.silentpom.builder;
 
 /**
  * Created by Vlad on 29.10.2016.
+ * Used as base class for all builder implementations
+ *
  */
-public class BuilderImpl<T, RetBuilder> /*implements Builder<T>*/ {
+public class BuilderImpl<T, RetBuilder>  {
     protected T nested;
-    RetBuilder returnedBuilder;
+    RetBuilder returnBuilder;
 
     protected BuilderImpl(T child) {
         nested = child;
@@ -15,15 +17,14 @@ public class BuilderImpl<T, RetBuilder> /*implements Builder<T>*/ {
         return nested;
     }
 
-    protected void injectReturningBuilder(RetBuilder builder) {
-        returnedBuilder = builder;
+    protected void injectReturnBuilder(RetBuilder builder) {
+        returnBuilder = builder;
     }
 
     protected RetBuilder self() {
-        return returnedBuilder;
+        return returnBuilder;
     }
 
-    //@Override
     public T build() {
         return nested;
     }

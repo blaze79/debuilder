@@ -29,8 +29,12 @@ public class Gen2Test {
         );
     }
 
-
-    private static Gen1 buildGen1Final(Gen1.ValueSetter1<? extends Gen1, ?> builder) {
+    /**
+     * test function that have Gen1 builder parameter
+     * @param builder
+     * @return
+     */
+    private static Gen1 buildGen1Final(Gen1.InnerBuilder1<? extends Gen1, ?> builder) {
         builder.val1("set value from Gen1 builder");
         return builder.build();
     }
